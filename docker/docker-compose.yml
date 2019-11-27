@@ -1,0 +1,14 @@
+version: '3'
+services:  
+  flask:
+    image: webapp-flask
+    build:
+      context: ./dockerfile-flask
+    privileged: true
+    ports: 
+      - 5000:5000
+    volumes:
+      - "./dockerfile-flask/requirements.txt:/tmp/requirements.txt"
+      - "./dockerfile-flask/entrypoint.sh:/tmp/entrypoint.sh"
+      - "../web/:/app"
+    command: sh /tmp/entrypoint.sh
