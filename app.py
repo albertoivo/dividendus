@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from currency_converter import CurrencyConverter
 
 from stocks.stocks import stocks
@@ -11,7 +11,7 @@ app.register_blueprint(stocks)
 
 @app.route('/')
 def home():
-    return 'Hello World'
+    return render_template('main.html')
 
 
 @app.route('/api/help/json', methods=['GET'])
