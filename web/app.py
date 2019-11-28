@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, abort
 from currency_converter import CurrencyConverter
 
 from stocks.stocks import stocks
@@ -11,7 +11,7 @@ app.register_blueprint(stocks)
 
 @app.route('/')
 def home():
-    return render_template('main.html')
+    return render_template('pages/home.html')
 
 
 @app.route('/api/help/json', methods=['GET'])
@@ -41,13 +41,22 @@ def currency_converter(amount, currency='BRL', new_currency='USD'):
     # Pode instanciar o CurrencyConverter sem o parametro abaixo
     # É mais rápido porém desatualizado.
     c = CurrencyConverter('http://www.ecb.europa.eu/stats/eurofxref/eurofxref.zip')
-
     result = c.convert(amount, currency, new_currency)
 
     return jsonify({
         currency: amount,
         new_currency: result
     })
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('errors/404.html'), 404
+
+
+@app.errorhandler(500)
+def not_found(error):
+    return render_template('errors/500.html'), 500
 
 
 if __name__ == '__main__':

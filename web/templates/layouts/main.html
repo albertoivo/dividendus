@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Dividendus 1.0</title>
+  <title>{% block title %}{% endblock %}</title>
 
   <meta charset="UTF-8">
   <meta name="description" content="Dividendus WebApp">
-  <meta name="keywords" content="Python, Flask, SQLAlchemy, Stock Exchange">
+  <meta name="keywords" content="Python, Flask, SQLAlchemy, Bolsa de Valores, Stock Exchange, Dividendos, Dividends">
   <meta name="author" content="Alberto Ivo Vieira">
   <meta name="author" content="Marcus Vinicius Tavares">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,23 +13,21 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
   <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
 
-  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
   <!-- NAV BAR -->
-  {% include 'navbar.html' %}
+  {% include 'layouts/navbar.html' %}
 
-  <!-- FLASH Messages -->
-  {% include 'flash_messages.html' %}
+  <!-- Flash Messages -->
+  {% include 'layouts/flash_messages.html' %}
 
   <!-- Main Content -->
-  <div class="container">
-    {% block content %} {% endblock %}
-  </div>
+  {% block content %} {% endblock %}
 
   <!-- Footer -->
-  {% include 'footer.html' %}
+  {% include 'layouts/footer.html' %}
 
   <!-- Calling script for navbar -->
   <script src="{{ url_for( 'static', filename='js/utils.js' ) }} "></script>

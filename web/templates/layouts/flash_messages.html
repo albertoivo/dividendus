@@ -1,0 +1,55 @@
+<!-- Primary Messages -->
+
+{% with messages = get_flashed_messages(category_filter=["primary"]) %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="container">
+        <div id="flash_primary">
+          <h4 style="margin-left: 10px">{{ message }}</h4>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<!-- Success Messages -->
+
+{% with messages = get_flashed_messages(category_filter=["success"]) %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="container">
+        <div id="flash_success">
+          <h4 style="margin-left: 10px">{{ message }}</h4>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<!-- Warning Messages -->
+
+{% with messages = get_flashed_messages(category_filter=["warning"]) %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="container">
+        <div id="flash_warning">
+          <h4 style="margin-left: 10px">{{ message }}</h4>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<!-- Error Messages -->
+
+{% with messages = get_flashed_messages(category_filter=["error"]) %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="container">
+        <div id="flash_error">
+          <h4 style="margin-left: 10px">{{ message }}</h4>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}

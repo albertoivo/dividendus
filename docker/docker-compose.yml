@@ -1,5 +1,19 @@
 version: '3'
-services:  
+services:
+  postgres:
+    image: postgres:12-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - LC_ALL=C.UTF-8
+      - POSTGRES_DB=dividendusdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT=5432
+    volumes:
+#      - ./postgresql/scripts/1-schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+#      - ./postgresql/scripts/2-data.sql:/docker-entrypoint-initdb.d/2-data.sql
+      - pgdata_dividendus:/var/lib/postgresql/data
   flask:
     image: webapp-flask
     build:
@@ -7,8 +21,13 @@ services:
     privileged: true
     ports: 
       - 5000:5000
+    depends_on:
+      - postgres
     volumes:
       - "./dockerfile-flask/requirements.txt:/tmp/requirements.txt"
       - "./dockerfile-flask/entrypoint.sh:/tmp/entrypoint.sh"
       - "../web/:/app"
     command: sh /tmp/entrypoint.sh
+volumes:
+  pgdata_dividendus:
+    driver: local
