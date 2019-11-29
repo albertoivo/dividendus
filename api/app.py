@@ -1,11 +1,27 @@
-from flask import Flask, jsonify, abort
-from currency_converter import CurrencyConverter
+import logging
+from logging import Formatter, FileHandler
 
+from config import Config
+from currency_converter import CurrencyConverter
+from flask import Flask, jsonify
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 from stocks.stocks import stocks
 
-app = Flask(__name__)
+# -------------------------------------------------------------------------- #
+# App Config.
+# -------------------------------------------------------------------------- #
 
-# Blueprints register
+APPLICATION_NAME = "app.py"
+
+app = Flask(__name__)
+app.config.from_object(Config)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+# -------------------------------------------------------------------------- #
+# Blueprints register.
+# -------------------------------------------------------------------------- #
 app.register_blueprint(stocks)
 
 
@@ -74,5 +90,15 @@ def internal_server_error(e):
     }), 500
 
 
+if not app.debug:
+    file_handler = FileHandler('error.log')
+    file_handler.setFormatter(Formatter(
+        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+    app.logger.setLevel(logging.INFO)
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.info('errors')
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
