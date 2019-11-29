@@ -26,7 +26,7 @@ services:
     volumes:
       - "./dockerfile-flask/requirements.txt:/tmp/requirements.txt"
       - "./dockerfile-flask/entrypoint.sh:/tmp/entrypoint.sh"
-      - "../web/:/app"
+      - "../api/:/app"
     command: sh /tmp/entrypoint.sh
 volumes:
   pgdata_dividendus:

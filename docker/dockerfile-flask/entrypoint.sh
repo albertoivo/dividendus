@@ -1,13 +1,11 @@
 #!/bin/sh
 
 export FLASK_ENV=development
-export FLASK_APP=models
+export FLASK_APP=app
 
-cd /app || exit
+#flask db migrate
+#flask db upgrade
 
-flask db migrate
-flask db upgrade
+#gunicorn -b :5000 app:app
 
-gunicorn -b :5000 app:app
-
-
+flask run --host=0.0.0.0
