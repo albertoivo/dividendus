@@ -1,8 +1,7 @@
 import logging
 from logging import Formatter, FileHandler
-
+import utils
 from config import Config
-from currency_converter import CurrencyConverter
 from flask import Flask, jsonify
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -11,7 +10,6 @@ from stocks.stocks import stocks
 # -------------------------------------------------------------------------- #
 # App Config.
 # -------------------------------------------------------------------------- #
-
 APPLICATION_NAME = "app.py"
 
 app = Flask(__name__)
@@ -28,10 +26,10 @@ app.register_blueprint(stocks)
 @app.route('/')
 def home():
     """Home."""
-    return jsonify('Home do dividendus')
+    return jsonify('Home')
 
 
-@app.route('/api/help/json', methods=['GET'])
+@app.route('/api/help')
 def api_help_json():
     """Print available functions."""
 
@@ -55,14 +53,9 @@ def currency_converter(amount, currency='BRL', new_currency='USD'):
     :rtype: float
     """
 
-    # Pode instanciar o CurrencyConverter sem o parametro abaixo
-    # É mais rápido porém desatualizado.
-    c = CurrencyConverter('http://www.ecb.europa.eu/stats/eurofxref/eurofxref.zip')
-    result = c.convert(amount, currency, new_currency)
-
     return jsonify({
         currency: amount,
-        new_currency: result
+        new_currency: utils.currency_converter(amount, currency, new_currency)
     })
 
 
