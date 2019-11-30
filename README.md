@@ -20,7 +20,7 @@ Este é um app para organização de ações, à princípio, no Brasil e Estados
 
 Dentor do projeto `dividendus`, rodar os comandos:
 ```shell script
-$ cd dividendus
+$ cd docker
 $ docker-compose up
 ```
 
