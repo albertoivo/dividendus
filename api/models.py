@@ -46,6 +46,7 @@ class Stock(db.Model):
     """Stock entity"""
 
     ticker = db.Column(db.String, primary_key=True)
+    country = db.Column(db.String)
     broker = db.Column(db.String)
     date = db.Column(db.Date)
     price = db.Column(db.Float)
