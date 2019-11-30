@@ -1,27 +1,22 @@
 import logging
 from logging import Formatter, FileHandler
 import utils
-from config import Config
 from flask import Flask, jsonify
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
 from stocks.stocks import stocks
 
-# -------------------------------------------------------------------------- #
-# App Config.
-# -------------------------------------------------------------------------- #
 APPLICATION_NAME = "app.py"
-
 app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
 # -------------------------------------------------------------------------- #
 # Blueprints register.
 # -------------------------------------------------------------------------- #
+
 app.register_blueprint(stocks)
 
+
+# -------------------------------------------------------------------------- #
+# Routes.
+# -------------------------------------------------------------------------- #
 
 @app.route('/')
 def home():
@@ -58,6 +53,10 @@ def currency_converter(amount, currency='BRL', new_currency='USD'):
         new_currency: utils.currency_converter(amount, currency, new_currency)
     })
 
+
+# -------------------------------------------------------------------------- #
+# Error handlers.
+# -------------------------------------------------------------------------- #
 
 @app.errorhandler(404)
 def not_found(e):
