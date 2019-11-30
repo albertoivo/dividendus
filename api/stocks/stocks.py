@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+import pandas as pd
 import pandas_datareader.data as pdr
 import datetime
 
@@ -28,23 +29,16 @@ def stock(ticker, start=now, end=now):
     return json
 
 
-@stocks.route('/graph/adjclose/<string:ticker>/<string:start>/<string:end>')
-@stocks.route('/graph/adjclose/<string:ticker>/<string:start>/<string:end>/<string:kind>')
-def graph_adj_close(ticker, start=now, end=now, kind='line'):
-    """
-
-    :param ticker:
-    :param start:
-    :param end:
-    :param kind:
-    :return:
-    """
+@stocks.route('/graph/<string:ticker>/<string:start>')
+@stocks.route('/graph/<string:ticker>/<string:start>/<string:end>')
+@stocks.route('/graph/<string:ticker>/<string:start>/<string:end>/<string:kind>')
+@stocks.route('/graph/<string:ticker>/<string:start>/<string:end>/<string:kind>/<string:colunm>')
+def graph(ticker, start, end=now, kind='line', colunm='Adj Close'):
     try:
-        df = pdr.get_data_yahoo(ticker, start, end)
-        df['Adj Close'].plot(kind=kind)
+        df = pdr.DataReader(ticker, 'yahoo', start, end)
+        df[colunm].plot(kind=kind)
         return utils.matplotlib_to_base64(plt)
     except RemoteDataError as r:
         return jsonify({'error': str(r)})
     except KeyError as r:
         return jsonify({'error': str(r)})
-
