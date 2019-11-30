@@ -24,4 +24,4 @@ $ cd docker
 $ docker-compose up
 ```
 
-O comando acima inicializará o banco de dados, a api e o módulo web.
+O comando acima inicializará o banco de dados, a api.
