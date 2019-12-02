@@ -107,5 +107,6 @@ venv.bak/
 .idea
 .vscode
 
+requirements.txt
 teste.json
 teste.py

@@ -1,12 +1,12 @@
 #!/bin/sh
 
 export FLASK_ENV=development
-
 export FLASK_APP=models
 
-flask db init
+[ -d "migrations" ] && echo "Directory migrations exists." && flask db upgrade
+[ ! -d "migrations" ] && echo "Directory migrations DOES NOT exists." &&  flask db init
 flask db migrate
-flask db upgrade
+
 
 #gunicorn -b :5000 app:app
 

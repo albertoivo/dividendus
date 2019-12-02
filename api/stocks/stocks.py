@@ -34,6 +34,15 @@ def stock(ticker, start=now, end=now):
 @stocks.route('/graph/<string:ticker>/<string:start>/<string:end>/<string:kind>')
 @stocks.route('/graph/<string:ticker>/<string:start>/<string:end>/<string:kind>/<string:colunm>')
 def graph(ticker, start, end=now, kind='line', colunm='Adj Close'):
+    """
+
+    :param ticker:
+    :param start:
+    :param end: Default=now
+    :param kind: Default='line'
+    :param colunm: Default='Adj Close'
+    :return:
+    """
     try:
         df = pdr.DataReader(ticker, 'yahoo', start, end)
         df[colunm].plot(kind=kind)

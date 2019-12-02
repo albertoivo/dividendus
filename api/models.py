@@ -49,7 +49,7 @@ class Stock(db.Model):
     country = db.Column(db.String)
     broker = db.Column(db.String)
     date = db.Column(db.Date)
-    price = db.Column(db.Float)
+    price = db.Column(db.String)
     tax = db.Column(db.Float)
 
     def create(self):
