@@ -110,3 +110,4 @@ venv.bak/
 requirements.txt
 teste.json
 teste.py
+api/migrations/
