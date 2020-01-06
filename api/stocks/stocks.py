@@ -44,7 +44,7 @@ def graph(ticker, start, end=now, kind='line', colunm='Adj Close'):
     :return:
     """
     try:
-        df = pdr.DataReader(ticker, 'yahoo', start, end)
+    df = pdr.get_data_yahoo(ticker, start, end)
         df[colunm].plot(kind=kind)
         return utils.matplotlib_to_base64(plt)
     except RemoteDataError as r:
