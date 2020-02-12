@@ -107,7 +107,5 @@ venv.bak/
 .idea
 .vscode
 
-requirements.txt
-teste.json
-teste.py
-api/migrations/
+error.log
+migrations/

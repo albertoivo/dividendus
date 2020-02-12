@@ -10,11 +10,11 @@ export FLASK_ENV=development
 
 export FLASK_APP=models
 
-[ ! -d "migrations" ] && echo "Directory migrations DOES NOT exists." &&  flask db init
+[ ! -d "migrations" ] && echo "Directory migrations DOES NOT exists. Creating..." &&  flask db init
 
 flask db migrate
 
-[ -d "migrations" ] && echo "Directory migrations exists." && flask db upgrade
+[ -d "migrations" ] && echo "Directory migrations exists. Upgrading..." && flask db upgrade
 
 
 # gunicorn -b :5000 app:app

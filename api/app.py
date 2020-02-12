@@ -1,7 +1,7 @@
 import logging
 from logging import Formatter, FileHandler
 import utils
-from flask import Flask, jsonify
+from flask import Flask, jsonify, abort
 from stocks.stocks import stocks
 
 APPLICATION_NAME = "app.py"
@@ -48,38 +48,30 @@ def currency_converter(amount, currency='BRL', new_currency='USD'):
     :rtype: float
     """
 
-    return jsonify({
-        currency: amount,
-        new_currency: utils.currency_converter(amount, currency, new_currency)
-    })
+    currency = currency.upper()
+    new_currency = new_currency
+
+    try:
+        result = utils.currency_converter(amount, currency, new_currency)
+        return jsonify({
+            currency: amount,
+            new_currency: result
+        })
+    except ValueError as e:
+        abort(400, e)
 
 
 # -------------------------------------------------------------------------- #
-# Error handlers.
+# Error handler.
 # -------------------------------------------------------------------------- #
 
-@app.errorhandler(404)
-def not_found(e):
+@app.errorhandler(Exception)
+def bad_request(e):
     return jsonify({
-        'code': '404',
-        'description': str(e)
-    }), 404
-
-
-@app.errorhandler(403)
-def forbidden(e):
-    return jsonify({
-        'code': '403',
-        'description': str(e)
-    }), 403
-
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    return jsonify({
-        'code': '500',
-        'description': str(e)
-    }), 500
+        'code': str(e.code),
+        'name': str(e.name),
+        'description': str(e.description)
+    }), e.code
 
 
 if not app.debug:
